@@ -12823,6 +12823,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
+
+var _url2 = _interopRequireDefault(_url);
+
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
 var _control_widgets = __webpack_require__(/*! ../Components/control_widgets.jsx */ "./src/javascript/app_2/Modules/SmartChart/Components/control_widgets.jsx");
@@ -12846,6 +12850,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(0, _smartcharts.setSmartChartsPublicPath)(_url2.default.urlForStatic('js/app_2/'));
 
 var Chart = function (_React$Component) {
     _inherits(Chart, _React$Component);
@@ -25069,17 +25075,6 @@ var Loading = function Loading(_ref) {
 };
 
 exports.default = Loading;
-
-/***/ }),
-
-/***/ "CIQ":
-/*!**********************!*\
-  !*** external "CIQ" ***!
-  \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = CIQ;
 
 /***/ })
 
