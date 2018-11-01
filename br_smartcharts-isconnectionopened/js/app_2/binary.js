@@ -1584,6 +1584,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 
+var _simplebarReact = __webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js");
+
+var _simplebarReact2 = _interopRequireDefault(_simplebarReact);
+
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -1642,8 +1646,23 @@ var DataTable = function (_React$PureComponent) {
                 columns = _props.columns,
                 footer = _props.footer,
                 getRowLink = _props.getRowLink,
+                is_empty = _props.is_empty,
                 onScroll = _props.onScroll;
 
+
+            var TableData = _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                this.props.data_source.map(function (row_obj, id) {
+                    return _react2.default.createElement(_table_row2.default, {
+                        row_obj: row_obj,
+                        columns: columns,
+                        key: id,
+                        to: getRowLink && getRowLink(row_obj)
+                    });
+                }),
+                children
+            );
 
             return _react2.default.createElement(
                 'div',
@@ -1664,15 +1683,11 @@ var DataTable = function (_React$PureComponent) {
                             _this2.el_table_body = el;
                         }
                     },
-                    this.props.data_source.map(function (row_obj, id) {
-                        return _react2.default.createElement(_table_row2.default, {
-                            row_obj: row_obj,
-                            columns: columns,
-                            key: id,
-                            to: getRowLink && getRowLink(row_obj)
-                        });
-                    }),
-                    children
+                    is_empty ? TableData : _react2.default.createElement(
+                        _simplebarReact2.default,
+                        null,
+                        TableData
+                    )
                 ),
                 this.props.footer && _react2.default.createElement(
                     'div',
@@ -3410,6 +3425,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _simplebarReact = __webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js");
+
+var _simplebarReact2 = _interopRequireDefault(_simplebarReact);
+
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
@@ -3506,7 +3525,11 @@ var PortfolioDrawer = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'portfolio-drawer__body' },
-                    body_content
+                    _react2.default.createElement(
+                        _simplebarReact2.default,
+                        { style: { height: '100%' } },
+                        body_content
+                    )
                 )
             );
         }
@@ -5296,6 +5319,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
 
+var _simplebarReact = __webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js");
+
+var _simplebarReact2 = _interopRequireDefault(_simplebarReact);
+
 var _Common = __webpack_require__(/*! ../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5436,32 +5463,36 @@ var Dropdown = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'list-container' },
-                            (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(Items, {
-                                items: this.props.list,
-                                name: this.props.name,
-                                value: this.props.value,
-                                handleSelect: this.handleSelect
-                            }) : Object.keys(this.props.list).map(function (key) {
-                                return _react2.default.createElement(
-                                    _react2.default.Fragment,
-                                    { key: key },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'list-label' },
+                            _react2.default.createElement(
+                                _simplebarReact2.default,
+                                { style: { 'height': '100%' } },
+                                (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(Items, {
+                                    items: this.props.list,
+                                    name: this.props.name,
+                                    value: this.props.value,
+                                    handleSelect: this.handleSelect
+                                }) : Object.keys(this.props.list).map(function (key) {
+                                    return _react2.default.createElement(
+                                        _react2.default.Fragment,
+                                        { key: key },
                                         _react2.default.createElement(
-                                            'span',
-                                            null,
-                                            key
-                                        )
-                                    ),
-                                    _react2.default.createElement(Items, {
-                                        items: _this2.props.list[key],
-                                        name: _this2.props.name,
-                                        value: _this2.props.value,
-                                        handleSelect: _this2.handleSelect
-                                    })
-                                );
-                            })
+                                            'div',
+                                            { className: 'list-label' },
+                                            _react2.default.createElement(
+                                                'span',
+                                                null,
+                                                key
+                                            )
+                                        ),
+                                        _react2.default.createElement(Items, {
+                                            items: _this2.props.list[key],
+                                            name: _this2.props.name,
+                                            value: _this2.props.value,
+                                            handleSelect: _this2.handleSelect
+                                        })
+                                    );
+                                })
+                            )
                         )
                     )
                 )
@@ -5707,19 +5738,19 @@ var InputField = function InputField(_ref) {
     var changeValue = function changeValue(e) {
         if (type === 'number') {
             var is_empty = !e.target.value || e.target.value === '';
-            var signed_regex = is_signed ? '[\\+-]?' : '';
+            var signed_regex = is_signed ? '(?!^([-+]0)$|^[-+]?$)^[+-]?' : '^';
 
-            var is_number = new RegExp('^' + signed_regex + '(\\d*)?' + (is_float ? '(\\.\\d+)?' : '') + '(?<=\\d)(?<!-0)$').test(e.target.value);
+            var is_number = new RegExp(signed_regex + '(\\d*)?' + (is_float ? '(\\.\\d+)?' : '') + '$').test(e.target.value);
 
-            var is_not_completed_number = is_float && new RegExp('^' + signed_regex + '(\\.|\\d+\\.)?$').test(e.target.value);
+            var is_not_completed_number = is_float && new RegExp(signed_regex + '(\\.|\\d+\\.)?$').test(e.target.value);
 
             // This regex check whether there is any zero at the end of fractional part or not.
-            var has_zero_at_end = new RegExp('^' + signed_regex + '(\\d+)?\\.(\\d+)?[0]+$').test(e.target.value);
+            var has_zero_at_end = new RegExp(signed_regex + '(\\d+)?\\.(\\d+)?[0]+$').test(e.target.value);
 
             var is_scientific_notation = /e/.test('' + +e.target.value);
 
             if (max_length && fractional_digits) {
-                has_valid_length = new RegExp('^' + signed_regex + '(\\d{0,' + max_length + '})(\\.\\d{0,' + fractional_digits + '})?$').test(e.target.value);
+                has_valid_length = new RegExp(signed_regex + '(\\d{0,' + max_length + '})(\\.\\d{0,' + fractional_digits + '})?$').test(e.target.value);
             }
 
             if ((is_number || is_empty) && has_valid_length) {
@@ -11461,8 +11492,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _Errors = __webpack_require__(/*! ../../../App/Components/Elements/Errors */ "./src/javascript/app_2/App/Components/Elements/Errors/index.js");
 
 var _Errors2 = _interopRequireDefault(_Errors);
@@ -11485,6 +11514,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Contract = function Contract(_ref) {
     var is_mobile = _ref.is_mobile,
+        error_message = _ref.error_message,
         has_error = _ref.has_error,
         match = _ref.match,
         symbol = _ref.symbol,
@@ -11496,7 +11526,7 @@ var Contract = function Contract(_ref) {
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        has_error ? _react2.default.createElement(_Errors2.default, { message: (0, _localize.localize)('Unknown Error!') }) : _react2.default.createElement(
+        has_error ? _react2.default.createElement(_Errors2.default, { message: error_message }) : _react2.default.createElement(
             'div',
             { className: 'trade-container' },
             _react2.default.createElement(
@@ -11537,6 +11567,7 @@ var Contract = function Contract(_ref) {
 
 Contract.propTypes = {
     chart_config: _propTypes2.default.object,
+    error_message: _propTypes2.default.string,
     has_error: _propTypes2.default.bool,
     is_mobile: _propTypes2.default.bool,
     match: _propTypes2.default.object,
@@ -11548,6 +11579,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         ui = _ref2.ui;
     return {
         chart_config: modules.contract.chart_config,
+        error_message: modules.contract.error_message,
         has_error: modules.contract.has_error,
         updateChartType: modules.contract.updateChartType,
         updateGranularity: modules.contract.updateGranularity,
@@ -11604,6 +11636,10 @@ var _details_header = __webpack_require__(/*! ../Components/Details/details_head
 
 var _details_header2 = _interopRequireDefault(_details_header);
 
+var _Errors = __webpack_require__(/*! ../../../App/Components/Elements/Errors */ "./src/javascript/app_2/App/Components/Elements/Errors/index.js");
+
+var _Errors2 = _interopRequireDefault(_Errors);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11640,34 +11676,39 @@ var ContractDetails = function (_React$Component) {
                 transaction_ids = _props$contract_info.transaction_ids;
 
 
-            return !contract_id ? _react2.default.createElement(_ui_loader2.default, null) : _react2.default.createElement(
-                _react2.default.Fragment,
-                null,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'contract-container' },
-                    _react2.default.createElement(_details_header2.default, { status: this.props.display_status }),
-                    _react2.default.createElement(_details_contents2.default, {
-                        buy_id: transaction_ids.buy,
-                        details_expiry: this.props.details_expiry,
-                        details_info: this.props.details_info,
-                        longcode: longcode
-                    }),
+            if (contract_id && !this.props.has_error) {
+                return _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
                     _react2.default.createElement(
-                        _reactRouterDom.Link,
-                        {
-                            className: 'btn secondary orange',
-                            to: _routes2.default.trade,
-                            onClick: this.props.onClickNewTrade
-                        },
+                        'div',
+                        { className: 'contract-container' },
+                        _react2.default.createElement(_details_header2.default, { status: this.props.display_status }),
+                        _react2.default.createElement(_details_contents2.default, {
+                            buy_id: transaction_ids.buy,
+                            details_expiry: this.props.details_expiry,
+                            details_info: this.props.details_info,
+                            longcode: longcode
+                        }),
                         _react2.default.createElement(
-                            'span',
-                            null,
-                            (0, _localize.localize)('Start a new trade')
+                            _reactRouterDom.Link,
+                            {
+                                className: 'btn secondary orange',
+                                to: _routes2.default.trade,
+                                onClick: this.props.onClickNewTrade
+                            },
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                (0, _localize.localize)('Start a new trade')
+                            )
                         )
                     )
-                )
-            );
+                );
+            } else if (!contract_id && !this.props.has_error) {
+                return _react2.default.createElement(_ui_loader2.default, null);
+            }
+            return _react2.default.createElement(_Errors2.default, { message: this.props.error_message });
         }
     }]);
 
@@ -11680,6 +11721,8 @@ ContractDetails.propTypes = {
     details_expiry: _propTypes2.default.object,
     details_info: _propTypes2.default.object,
     display_status: _propTypes2.default.string,
+    error_message: _propTypes2.default.string,
+    has_error: _propTypes2.default.bool,
     onClickNewTrade: _propTypes2.default.func,
     onMount: _propTypes2.default.func,
     onUnmount: _propTypes2.default.func
@@ -11692,6 +11735,8 @@ exports.default = (0, _connect.connect)(function (_ref) {
         details_info: modules.contract.details_info,
         details_expiry: modules.contract.details_expiry,
         display_status: modules.contract.display_status,
+        error_message: modules.contract.error_message,
+        has_error: modules.contract.has_error,
         onMount: modules.contract.onMount,
         onUnmount: modules.contract.onUnmount
     };
@@ -13480,7 +13525,8 @@ var Statement = function (_React$Component) {
                             onScroll: handleScroll,
                             getRowLink: function getRowLink(row_obj) {
                                 return row_obj.id ? (0, _helpers.getContractPath)(row_obj.id) : undefined;
-                            }
+                            },
+                            is_empty: is_empty
                         },
                         renderGUI()
                     )
@@ -18066,10 +18112,15 @@ var SubscriptionManager = function () {
         var subscribers = sub_info.subscribers;
         if (subscribers.length) {
             if (
-            // remove subscription info when first response returned error
-            // or not a subscription (i.e. subscribed proposal_open_contract for an expired contract)
+            // it is the first response
+            !sub_info.stream_id && (
+            // the first response returned error
+            response.error ||
+            // not a subscription (i.e. subscribed proposal_open_contract for an expired contract)
+            // also to filter out streams with no stream id but later it will continue streaming (i.e. proposal_open_contract without contract id)
+            !(0, _utility.isEmptyObject)(response[response.msg_type]) &&
             // check msg_type to filter out those calls which don't return stream `id` on first response (tick_history, ...)
-            !sub_info.stream_id && (response.error || response.msg_type === sub_info.msg_type) ||
+            response.msg_type === sub_info.msg_type) ||
             // remove when response isn't first and response has no stream_id
             !stream_id && sub_info.stream_id) {
                 delete subscriptions[sub_id];
@@ -18779,13 +18830,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
 var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
 var _Services = __webpack_require__(/*! ../../../Services */ "./src/javascript/app_2/Services/index.js");
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 var _chart_barriers = __webpack_require__(/*! ./Helpers/chart_barriers */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart_barriers.js");
 
@@ -18866,7 +18919,7 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContractStore.__proto__ || Object.getPrototypeOf(ContractStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'contract_id', _descriptor, _this), _initDefineProp(_this, 'contract_info', _descriptor2, _this), _initDefineProp(_this, 'digits_info', _descriptor3, _this), _initDefineProp(_this, 'sell_info', _descriptor4, _this), _initDefineProp(_this, 'chart_config', _descriptor5, _this), _initDefineProp(_this, 'has_error', _descriptor6, _this), _initDefineProp(_this, 'is_sell_requested', _descriptor7, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ContractStore.__proto__ || Object.getPrototypeOf(ContractStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'contract_id', _descriptor, _this), _initDefineProp(_this, 'contract_info', _descriptor2, _this), _initDefineProp(_this, 'digits_info', _descriptor3, _this), _initDefineProp(_this, 'sell_info', _descriptor4, _this), _initDefineProp(_this, 'chart_config', _descriptor5, _this), _initDefineProp(_this, 'has_error', _descriptor6, _this), _initDefineProp(_this, 'error_message', _descriptor7, _this), _initDefineProp(_this, 'is_sell_requested', _descriptor8, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(ContractStore, [{
@@ -18887,12 +18940,14 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
     }, {
         key: 'onMount',
         value: function onMount(contract_id) {
+            this.has_error = false;
+            this.error_message = '';
             this.contract_id = contract_id;
             this.smart_chart = this.root_store.modules.smart_chart;
             this.smart_chart.setContractMode(true);
 
             if (contract_id) {
-                _Services.WS.subscribeProposalOpenContract(this.contract_id, this.updateProposal, true);
+                _Services.WS.subscribeProposalOpenContract(this.contract_id, this.updateProposal, false);
             }
         }
     }, {
@@ -18915,6 +18970,13 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
         value: function updateProposal(response) {
             if ('error' in response) {
                 this.has_error = true;
+                this.error_message = response.error.message;
+                this.contract_info = {};
+                return;
+            }
+            if ((0, _utility.isEmptyObject)(response.proposal_open_contract)) {
+                this.has_error = true;
+                this.error_message = (0, _localize.localize)('Contract does not exist or does not belong to this client.');
                 this.contract_info = {};
                 return;
             }
@@ -18950,6 +19012,7 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
                 this.sell_info = {
                     error_message: response.error.message
                 };
+
                 this.is_sell_requested = false;
             } else {
                 this.forgetProposalOpenContract();
@@ -19069,7 +19132,12 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
     initializer: function initializer() {
         return false;
     }
-}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, 'is_sell_requested', [_mobx.observable], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, 'error_message', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return '';
+    }
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, 'is_sell_requested', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
