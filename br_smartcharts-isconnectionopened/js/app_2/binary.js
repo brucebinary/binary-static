@@ -17893,14 +17893,16 @@ var BinarySocketGeneral = function () {
         }
     };
 
+    var onDisconnect = (0, _mobx.action)(function () {
+        common_store.is_socket_opened = false;
+    });
+
     var init = function init(store) {
         client_store = store.client;
         common_store = store.common;
-        _socket_base2.default.setOnDisconnect((0, _mobx.action)(function () {
-            common_store.is_socket_opened = false;
-        }));
 
         return {
+            onDisconnect: onDisconnect,
             onOpen: onOpen,
             onMessage: onMessage
         };
