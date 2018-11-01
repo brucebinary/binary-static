@@ -17771,7 +17771,9 @@ var BinarySocketGeneral = function () {
             _server_time2.default.init((0, _mobx.action)('setTime', function () {
                 common_store.server_time = _server_time2.default.get();
             }));
-            common_store.is_socket_opened = true;
+            (0, _mobx.runInAction)(function () {
+                common_store.is_socket_opened = true;
+            });
         }
     };
 
@@ -17894,9 +17896,9 @@ var BinarySocketGeneral = function () {
     var init = function init(store) {
         client_store = store.client;
         common_store = store.common;
-        _socket_base2.default.setOnDisconnect(function () {
+        _socket_base2.default.setOnDisconnect((0, _mobx.action)(function () {
             common_store.is_socket_opened = false;
-        });
+        }));
 
         return {
             onOpen: onOpen,
