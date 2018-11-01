@@ -15626,7 +15626,8 @@ var StartDate = function StartDate(_ref) {
         sessions = _ref.sessions,
         start_date = _ref.start_date,
         start_dates_list = _ref.start_dates_list,
-        start_time = _ref.start_time;
+        start_time = _ref.start_time,
+        tabIndex = _ref.tabIndex;
 
     // Number(0) refers to 'now'
     var is_today = start_date === Number(0);
@@ -15655,7 +15656,8 @@ var StartDate = function StartDate(_ref) {
             value: start_date,
             list: start_dates_list,
             onChange: onChange,
-            is_nativepicker: is_nativepicker
+            is_nativepicker: is_nativepicker,
+            tabIndex: tabIndex
         }),
         !is_today && _react2.default.createElement(
             _react2.default.Fragment,
@@ -16487,11 +16489,12 @@ var TradeParams = function (_React$Component) {
             return _ui.form_components.filter(function (_ref) {
                 var name = _ref.name;
                 return _this2.isVisible(name);
-            }).map(function (_ref2) {
+            }).map(function (_ref2, idx) {
                 var name = _ref2.name,
                     Component = _ref2.Component;
                 return _react2.default.createElement(Component, _extends({
                     key: name,
+                    tabIndex: idx,
                     is_minimized: _this2.props.is_minimized,
                     is_nativepicker: _this2.props.is_nativepicker
                 }, (0, _component.getComponentProperties)(Component, _this2.props.trade_store, {
@@ -17764,6 +17767,10 @@ var client_store = void 0,
 
 // TODO: update commented statements to the corresponding functions from app_2
 var BinarySocketGeneral = function () {
+    var onDisconnect = function onDisconnect() {
+        common_store.setIsSocketOpened(false);
+    };
+
     var onOpen = function onOpen(is_ready) {
         // Header.hideNotification();
         if (is_ready) {
@@ -17777,9 +17784,7 @@ var BinarySocketGeneral = function () {
             _server_time2.default.init((0, _mobx.action)('setTime', function () {
                 common_store.server_time = _server_time2.default.get();
             }));
-            (0, _mobx.runInAction)(function () {
-                common_store.is_socket_opened = true;
-            });
+            common_store.setIsSocketOpened(true);
         }
     };
 
@@ -17898,10 +17903,6 @@ var BinarySocketGeneral = function () {
             // no default
         }
     };
-
-    var onDisconnect = (0, _mobx.action)(function () {
-        common_store.is_socket_opened = false;
-    });
 
     var init = function init(store) {
         client_store = store.client;
@@ -23231,7 +23232,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
+var _dec, _dec2, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -23296,7 +23297,7 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
+var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(CommonStore, _BaseStore);
 
     function CommonStore() {
@@ -23314,6 +23315,11 @@ var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
     }
 
     _createClass(CommonStore, [{
+        key: 'setIsSocketOpened',
+        value: function setIsSocketOpened(is_socket_opened) {
+            this.is_socket_opened = is_socket_opened;
+        }
+    }, {
         key: 'setError',
         value: function setError(has_error, error) {
             this.has_error = has_error;
@@ -23363,7 +23369,7 @@ var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
     initializer: function initializer() {
         return false;
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'setIsSocketOpened', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setIsSocketOpened'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype)), _class));
 exports.default = CommonStore;
 
 /***/ }),

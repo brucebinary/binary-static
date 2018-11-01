@@ -1671,9 +1671,9 @@ div.dropdown-container {
       vertical-align: middle;
       padding-left: 8px;
       font-weight: 300; }
-    div.dropdown-container .dropdown-display:hover {
+    div.dropdown-container .dropdown-display:hover, div.dropdown-container .dropdown-display:focus {
       border-color: #2a3052; }
-      div.dropdown-container .dropdown-display:hover + .select-arrow {
+      div.dropdown-container .dropdown-display:hover + .select-arrow, div.dropdown-container .dropdown-display:focus + .select-arrow {
         color: #2a3052; }
   div.dropdown-container:active, div.dropdown-container:focus, div.dropdown-container.show {
     outline: 0;
