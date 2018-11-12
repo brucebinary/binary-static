@@ -5285,7 +5285,7 @@ var Dropdown = function (_React$Component) {
             var index = (0, _helpers.getItemFromValue)(_this.props.list, _this.props.value);
             var value = (0, _helpers.getValueFromIndex)(_this.props.list, _this.state.curr_index);
             var handleToggle = function handleToggle() {
-                if (_this.state.is_list_visible) {
+                if (_this.state.is_list_visible && _this.props.value !== value) {
                     _this.props.onChange({ target: { name: _this.props.name, value: value } });
                 }
                 _this.handleVisibility();
