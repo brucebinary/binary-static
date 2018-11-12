@@ -5316,9 +5316,17 @@ var Dropdown = function (_React$Component) {
             // For char presses, we do a search for the item:
             if (event.key.length === 1) {
                 var char = event.key.toLowerCase();
-                var idx = _this.props.list.findIndex(function (x) {
-                    return x.text[0].toLowerCase() === char;
+                var firstChars = _this.props.list.map(function (x) {
+                    return x.text[0].toLowerCase();
                 });
+                var idx = void 0;
+                // Tapping the same character again jumps to the next match:
+                if (_this.state.curr_index) {
+                    idx = firstChars.indexOf(char, _this.state.curr_index + 1);
+                }
+                if (idx === undefined || idx === -1) {
+                    idx = firstChars.indexOf(char);
+                }
                 if (idx >= 0) {
                     _this.setState({ curr_index: idx });
                 }
@@ -21608,8 +21616,8 @@ var getDurationMaps = function getDurationMaps() {
         t: { display: (0, _localize.localize)('ticks'), order: 1 },
         s: { display: (0, _localize.localize)('seconds'), order: 2, to_second: 1 },
         m: { display: (0, _localize.localize)('minutes'), order: 3, to_second: 60 },
-        h: { display: (0, _localize.localize)('hours'), order: 4, to_second: 60 * 60 },
-        d: { display: (0, _localize.localize)('days'), order: 5, to_second: 60 * 60 * 24 }
+        h: { display: (0, _localize.localize)('sakunds'), order: 4, to_second: 60 * 60 },
+        d: { display: (0, _localize.localize)('saercunts'), order: 5, to_second: 60 * 60 * 24 }
     };
 };
 
